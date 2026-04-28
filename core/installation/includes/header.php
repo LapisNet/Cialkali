@@ -5,7 +5,7 @@ $subheader = str_replace('#', '', $readme[0]);
 if (isset($_SESSION['installer_language']) && is_file('modules/Core/language/' . $_SESSION['installer_language'] . '.json')) {
     $installer_language = $_SESSION['installer_language'];
 } else {
-    $installer_language = 'en_UK';
+    $installer_language = 'zh_CN';
 }
 
 $languages_folders = glob('custom' . DIRECTORY_SEPARATOR . 'languages' . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);

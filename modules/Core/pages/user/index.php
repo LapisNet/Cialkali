@@ -67,9 +67,9 @@ if ($forum_enabled) {
 
     // Fill in missing dates
     $graph_start = strtotime('-7 days');
-    $graph_start = date('d M Y', $graph_start);
+    $graph_start = date('Y/m/d', $graph_start);
     $graph_start = strtotime($graph_start);
-    $end = strtotime(date('d M Y'));
+    $end = strtotime(date('Y/m/d'));
     while ($graph_start <= $end) {
         if (!isset($output[$graph_start]['user'])) {
             $output[$graph_start]['user'] = 0;
@@ -94,7 +94,7 @@ if ($forum_enabled) {
     $average_data = '';
     $total_data = '';
     foreach ($output as $date => $item) {
-        $labels .= '"' . date('Y-m-d', $date) . '", ';
+        $labels .= '"' . date('Y/m/d', $date) . '", ';
         $user_data .= $item['user'] . ', ';
         $average_data .= $item['average'] . ', ';
         $total_data .= $item['total'] . ', ';

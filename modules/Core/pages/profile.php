@@ -596,8 +596,8 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
     }
 
     $template->getEngine()->addVariables([
-        'NICKNAME' => $profile_user->getDisplayname(true),
-        'USERNAME' => $profile_user->getDisplayname(),
+        'USERNAME' => $profile_user->getDisplayname(true),
+        'NICKNAME' => $profile_user->getDisplayname(),
         'GROUPS' => $profile_user->getAllGroupHtml(),
         'USERNAME_COLOUR' => $profile_user->getGroupStyle(),
         'USER_TITLE' => Output::getClean($query->user_title),

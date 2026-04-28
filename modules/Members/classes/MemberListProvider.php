@@ -123,6 +123,7 @@ abstract class MemberListProvider {
             $list_members[] = array_merge(
                 [
                     'username' => Output::getClean($member->data()->username),
+                    'nickname' => $member->getDisplayname(),
                     'avatar_url' => $member->getAvatar(),
                     'group_style' => $member->getGroupStyle(),
                     'profile_url' => $member->getProfileURL(),

@@ -14,13 +14,13 @@
         <div class="ui divider"></div>
         <div class="ui list">
             <div class="item">
-                <span class="text">{$REGISTERED|regex_replace:'/[:].*/':''}</span>
-                <div class="description right floated" data-tooltip="{$REGISTERED_DATE}"><b>{$REGISTERED|regex_replace:'/^[^:]+:\h*/':''}</b></div>
+                <span class="text">{$REGISTERED|regex_replace:'/[:：].*/':''}</span>
+                <div class="description right floated" data-tooltip="{$REGISTERED_DATE}"><b>{$REGISTERED|regex_replace:'/^[^:：]+(:\h*|：)/':''}</b></div>
             </div>
             {if isset($LAST_SEEN)}
                 <div class="item">
-                    <span class="text">{$LAST_SEEN|regex_replace:'/[:].*/':''}</span>
-                    <div class="description right floated" data-tooltip="{$LAST_SEEN_DATE}"><b>{$LAST_SEEN|regex_replace:'/^[^:]+:\h*/':''}</b></div>
+                    <span class="text">{$LAST_SEEN|regex_replace:'/[:：].*/':''}</span>
+                    <div class="description right floated" data-tooltip="{$LAST_SEEN_DATE}"><b>{$LAST_SEEN|regex_replace:'/^[^:：]+(:\h*|：)/':''}</b></div>
                 </div>
             {/if}
             {if isset($TOPICS) && isset($POSTS)}

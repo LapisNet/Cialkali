@@ -21,8 +21,8 @@ class Date
         $interval = new DateInterval('P1D');
 
         if ($from) {
-            $from = date('d-M-Y', strtotime($from));
-            $date = DateTime::createFromFormat('d-M-Y', $from);
+            $from = date('Y/m/d', strtotime($from));
+            $date = DateTime::createFromFormat('Y/m/d', $from);
         } else {
             $date = new DateTime();
         }

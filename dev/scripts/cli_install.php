@@ -161,13 +161,13 @@ if (!str_contains($message, 'All Done')) {
     exit(1);
 }
 
-Session::put('default_language', getEnvVar('NAMELESS_DEFAULT_LANGUAGE', 'en_UK'));
+Session::put('default_language', getEnvVar('NAMELESS_DEFAULT_LANGUAGE', 'zh_CN'));
 
 echo '✍️  Inserting default data to database...' . PHP_EOL;
 
-$_SESSION['install_timezone'] = in_array($timezone = getEnvVar('NAMELESS_TIMEZONE', 'Europe/London'), DateTimeZone::listIdentifiers())
+$_SESSION['install_timezone'] = in_array($timezone = getEnvVar('NAMELESS_TIMEZONE', 'Asia/Shanghai'), DateTimeZone::listIdentifiers())
     ? $timezone
-    : 'Europe/London';
+    : 'Asia/Shanghai';
 
 DatabaseInitialiser::runPreUser();
 

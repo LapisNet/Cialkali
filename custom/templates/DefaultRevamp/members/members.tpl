@@ -169,9 +169,9 @@
                     const nameDiv = document.createElement('span');
                     nameDiv.style = member.group_style?.replace('&#039;', "'")?.replace('&quot;', '"');
                     {if $VIEWING_LIST != "overview"}
-                        nameDiv.innerHTML = member.username + '&nbsp;' + member.group_html.join('');
+                        nameDiv.innerHTML = member.nickname + '&nbsp;' + member.group_html.join('');
                     {else}
-                        nameDiv.innerText = member.username;
+                        nameDiv.innerText = member.nickname;
                     {/if}
                     contentDiv.appendChild(nameDiv);
 
