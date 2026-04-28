@@ -192,7 +192,7 @@ if ($page != 'install') {
     }
 
     // Set timezone
-    define('TIMEZONE', $user->isLoggedIn() ? $user->data()->timezone : Settings::get('timezone', 'Europe/London'));
+    define('TIMEZONE', $user->isLoggedIn() ? $user->data()->timezone : Settings::get('timezone', 'Asia/Shanghai'));
     date_default_timezone_set(TIMEZONE);
 
     // Language
@@ -200,7 +200,10 @@ if ($page != 'install') {
     $default_language = $cache->fetch('language', function () {
         $default_language = DB::getInstance()->get('languages', ['is_default', true])->results();
         if (count($default_language)) {
-            return $default_language[0]->short_code;
+            $default_language = $default_language[0]->short_code;
+            $cache->store('language', $default_language);
+        } else {
+            $default_language = 'zh_CN';
         }
 
         return 'en_UK';

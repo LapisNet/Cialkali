@@ -2,7 +2,7 @@
 require(__DIR__ . '/includes/functions.php');
 
 if (!defined('DEFAULT_LANGUAGE')) {
-    define('DEFAULT_LANGUAGE', 'en_UK');
+    define('DEFAULT_LANGUAGE', 'zh_CN');
 }
 
 if (isset($_GET['do'])) {

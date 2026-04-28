@@ -588,8 +588,8 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
     }
 
     $template->getEngine()->addVariables([
-        'NICKNAME' => $profile_user->getDisplayname(true),
-        'USERNAME' => $profile_user->getDisplayname(),
+        'USERNAME' => $profile_user->getDisplayname(true),
+        'NICKNAME' => $profile_user->getDisplayname(),
         'GROUPS' => $profile_user->getAllGroupHtml(),
         'USERNAME_COLOUR' => $profile_user->getGroupStyle(),
         'USER_TITLE' => Output::getClean($query->user_title),
@@ -598,7 +598,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
         'BANNER' => ((defined('CONFIG_PATH')) ? CONFIG_PATH . '/' : '/') . 'uploads/profile_images/' . (($query->banner) ? Output::getClean($query->banner) : 'profile.jpg'),
         'POST_ON_WALL' => $language->get('user', 'post_on_wall', ['user' => Output::getClean($profile_user->getDisplayname())]),
         'FEED' => $language->get('user', 'feed'),
-        'ABOUT' => $language->get('user', 'about'),
+        'ABOUT' => $language->get('user', 'about', ['user' => Output::getClean($profile_user->getDisplayname(true))]),
         'LIKE' => $language->get('user', 'like'),
         'CLOSE' => $language->get('general', 'close'),
         'REPLIES_TITLE' => $language->get('user', 'replies'),

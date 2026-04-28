@@ -33,7 +33,7 @@ error_reporting(0);
 ini_set('display_errors', 0);
 
 // Set default timezone to prevent potential issues
-date_default_timezone_set('Europe/London');
+date_default_timezone_set('Asia/Shanghai');
 
 // Select language
 if (

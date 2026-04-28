@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $_SESSION['install_timezone'] = in_array($timezone = Input::get('timezone'), DateTimeZone::listIdentifiers())
                 ? $timezone
-                : 'Europe/London';
+                : 'Asia/Shanghai';
 
             Redirect::to('?step=site_initialization');
         } catch (Exception $e) {

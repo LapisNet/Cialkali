@@ -44,7 +44,7 @@ class AvatarSource
         // If custom avatars are enabled, first check if they have gravatar enabled, and then fallback to normal image
         if (Settings::get('custom_avatars')) {
             if ($data->gravatar) {
-                return 'https://secure.gravatar.com/avatar/' . md5(strtolower(trim($data->email))) . '?s=' . $size;
+                return 'https://gravatar.loli.net/avatar/' . md5(strtolower(trim($data->email))) . '?s=' . $size;
             }
 
             if ($data->has_avatar) {
