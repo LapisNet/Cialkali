@@ -441,7 +441,7 @@
     "time/over_x_years": "超過 {{count}} 年",
     "user/1_reaction": "1 個回應",
     "user/1_reply": "1 個回覆",
-    "user/about": "關於",
+    "user/about": "關於 {user}",
     "user/accept_terms": "你必須接受服務條款。",
     "user/account_banned": "帳戶已被封禁。",
     "user/acknowledge": "確認",

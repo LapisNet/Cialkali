@@ -851,7 +851,7 @@
     "user/1_new_message": "您有 1 条新消息",
     "user/1_reaction": "1 个回应",
     "user/1_reply": "1 条回复",
-    "user/about": "关于我",
+    "user/about": "关于 {user}",
     "user/accept_terms": "注册前，您必须接受服务条款与相关条件。",
     "user/account_banned": "该帐户已被封禁。",
     "user/acknowledge": "承认",
