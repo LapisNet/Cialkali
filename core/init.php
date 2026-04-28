@@ -200,13 +200,10 @@ if ($page != 'install') {
     $default_language = $cache->fetch('language', function () {
         $default_language = DB::getInstance()->get('languages', ['is_default', true])->results();
         if (count($default_language)) {
-            $default_language = $default_language[0]->short_code;
-            $cache->store('language', $default_language);
-        } else {
-            $default_language = 'zh_CN';
+            return $default_language[0]->short_code;
         }
 
-        return 'en_UK';
+        return 'zh_CN';
     });
 
     define('DEFAULT_LANGUAGE', $default_language);
