@@ -368,6 +368,29 @@ class Forum {
     }
 
     /**
+     * Determine if the user can view a topic in a forum
+     *
+     * @param int   $forum_id        The forum ID for the topic
+     * @param int   $author_id       The topic author ID
+     * @param bool  $is_topic_sticky Whether the topic is sticky or not
+     * @param ?User $user            The user
+     * @return bool Whether the user can view the topic
+     */
+    public function canViewTopicInForum(int $forum_id, int $author_id, bool $is_topic_sticky, ?User $user): bool {
+        if ($user) {
+            $groups = $user->getAllGroupIds();
+            $userId = $user->data()->id;
+        } else {
+            $groups = [0];
+            $userId = 0;
+        }
+
+        return
+            $this->canViewForum($forum_id, $groups) &&
+            ($is_topic_sticky || $this->canViewOtherTopics($forum_id, $groups) || $author_id === $userId);
+    }
+
+    /**
      * Determine if the groups can post replies in the forum or not.
      *
      * @param int $forum_id The forum ID
@@ -476,14 +499,30 @@ class Forum {
      * @return array|false The post data or false on failure.
      */
     public function getIndividualPost(int $post_id) {
-        $data = $this->_db->get('posts', ['id', $post_id])->results();
-        if (count($data)) {
+        $data = $this->_db->query(
+            <<<SQL
+                SELECT p.post_creator,
+                       p.post_content,
+                       p.post_date,
+                       p.forum_id,
+                       p.topic_id,
+                       t.sticky
+                FROM nl2_posts p
+                    RIGHT JOIN nl2_topics t
+                        ON p.topic_id = t.id
+                WHERE p.id = ? AND p.deleted = 0
+            SQL,
+            [$post_id]
+        );
+        if ($data->count()) {
+            $data = $data->first();
             return [
-                'creator' => $data[0]->post_creator,
-                'content' => $data[0]->post_content,
-                'date' => $data[0]->post_date,
-                'forum_id' => $data[0]->forum_id,
-                'topic_id' => $data[0]->topic_id
+                'creator' => $data->post_creator,
+                'content' => $data->post_content,
+                'date' => $data->post_date,
+                'forum_id' => $data->forum_id,
+                'topic_id' => $data->topic_id,
+                'topic_sticky' => $data->sticky,
             ];
         }
         return false;

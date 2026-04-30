@@ -23,24 +23,21 @@ if (!isset($_GET['id'])) {
 
 const PAGE = 'user_query';
 $page_title = 'user_query';
-require_once(ROOT_PATH . '/core/templates/frontend_init.php');
+require_once ROOT_PATH . '/core/templates/frontend_init.php';
 
 if (!is_numeric($_GET['id'])) {
-    // Username
-    $username = Output::getClean($_GET['id']);
+    $username = preg_replace('/[^a-zA-Z0-9_]/', '', $_GET['id']);
     $nickname = $username;
     $profile = URL::build('/profile/' . $username);
-    $avatar = (isset($_GET['uuid']) ? AvatarSource::getAvatarFromUUID(Output::getClean($_GET['uuid'])) : AvatarSource::getAvatarFromUUID($username));
+    $avatar = (isset($_GET['uuid']) ? AvatarSource::getAvatarFromUUID(
+        preg_replace('/[^a-zA-Z0-9\-]/', '', $_GET['uuid'])
+    ) : AvatarSource::getAvatarFromUUID($username));
     $style = '';
     $groups = [];
     $id = 0;
 } else {
     $cache->setCache('user_query');
-
-    if ($cache->isCached($_GET['id'])) {
-        [$username, $nickname, $profile, $avatar, $style, $groups, $id] = $cache->retrieve($_GET['id']);
-
-    } else {
+    [$username, $nickname, $profile, $avatar, $style, $groups, $id] = $cache->fetch($_GET['id'], function () {
         $target_user = new User($_GET['id']);
         if (!$target_user->exists()) {
             die(json_encode(['html' => 'User not found']));
@@ -54,8 +51,8 @@ if (!is_numeric($_GET['id'])) {
         $groups = $target_user->getAllGroupHtml();
         $id = Output::getClean($target_user->data()->id);
 
-        $cache->store($_GET['id'], [$username, $nickname, $profile, $avatar, $style, $groups, $id], 60);
-    }
+        return [$username, $nickname, $profile, $avatar, $style, $groups, $id];
+    }, 60);
 }
 
 $template->getEngine()->addVariables([

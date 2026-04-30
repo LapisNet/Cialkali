@@ -64,6 +64,27 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
     }
     $query = $profile_user->data();
 
+    // Set Can view
+    $canView = true;
+
+    if ($user->isLoggedIn() && $profile_user->isBlocked($query->id, $user->data()->id)) {
+        $canView = false;
+
+        $template->getEngine()->addVariables([
+            'BLOCKED' => $language->get('user', 'blocked_profile_page'),
+        ]);
+    } elseif ($profile_user->isPrivateProfile() && !$user->canBypassPrivateProfile()) {
+        $canView = false;
+
+        $template->getEngine()->addVariables([
+            'PRIVATE_PROFILE' => $language->get('user', 'private_profile_page'),
+        ]);
+    }
+
+    $template->getEngine()->addVariables([
+        'CAN_VIEW' => $canView,
+    ]);
+
     // Deal with input
     if (Input::exists() && $user->isLoggedIn()) {
         if (isset($_POST['action'])) {
@@ -95,7 +116,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                     break;
 
                 case 'new_post':
-                    if (Token::check()) {
+                    if ($canView && Token::check()) {
                         if ($user->hasPermission('profile.post')) {
                             $validation = Validate::check($_POST, [
                                 'post' => [
@@ -114,6 +135,9 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
 
                             if ($validation->passed()) {
                                 // Validation successful
+                                $event = new ContentCreateEvent(Input::get('post'), $user);
+                                EventHandler::executeEvent($event);
+
                                 // Input into database
                                 DB::getInstance()->insert(
                                     'user_profile_wall_posts',
@@ -121,7 +145,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                                         'user_id' => $query->id,
                                         'author_id' => $user->data()->id,
                                         'time' => date('U'),
-                                        'content' => Input::get('post')
+                                        'content' => $event->content
                                     ]
                                 );
 
@@ -173,7 +197,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                     break;
 
                 case 'reply':
-                    if (Token::check()) {
+                    if ($canView && Token::check()) {
                         if ($user->hasPermission('profile.post')) {
                             $validation = Validate::check($_POST, [
                                 'reply' => [
@@ -207,6 +231,9 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                                     Redirect::to($profile_user->getProfileURL());
                                 }
 
+                                $event = new ContentCreateEvent(Input::get('reply'), $user);
+                                EventHandler::executeEvent($event);
+
                                 // Input into database
                                 DB::getInstance()->insert(
                                     'user_profile_wall_posts_replies',
@@ -214,7 +241,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                                         'post_id' => $_POST['post'],
                                         'author_id' => $user->data()->id,
                                         'time' => date('U'),
-                                        'content' => Input::get('reply')
+                                        'content' => $event->content
                                     ]
                                 );
 
@@ -357,13 +384,9 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                                 $post = $post[0];
                                 if ($user->canViewStaffCP() || $post->author_id == $user->data()->id) {
                                     if (isset($_POST['content']) && strlen($_POST['content']) < 10000 && strlen($_POST['content']) >= 1) {
-                                        try {
-                                            DB::getInstance()->update('user_profile_wall_posts', $_POST['post_id'], [
-                                                'content' => $_POST['content']
-                                            ]);
-                                        } catch (Exception $e) {
-                                            $error = $e->getMessage();
-                                        }
+                                        DB::getInstance()->update('user_profile_wall_posts', $_POST['post_id'], [
+                                            'content' => $_POST['content']
+                                        ]);
                                     } else {
                                         $error = $language->get('user', 'invalid_wall_post');
                                     }
@@ -383,12 +406,8 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                             if (count($post)) {
                                 $post = $post[0];
                                 if ($user->canViewStaffCP() || $post->author_id == $user->data()->id) {
-                                    try {
-                                        DB::getInstance()->delete('user_profile_wall_posts', ['id', $_POST['post_id']]);
-                                        DB::getInstance()->delete('user_profile_wall_posts_replies', ['post_id', $_POST['post_id']]);
-                                    } catch (Exception $e) {
-                                        $error = $e->getMessage();
-                                    }
+                                    DB::getInstance()->delete('user_profile_wall_posts', ['id', $_POST['post_id']]);
+                                    DB::getInstance()->delete('user_profile_wall_posts_replies', ['post_id', $_POST['post_id']]);
                                 }
                             }
                         }
@@ -405,11 +424,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                             if (count($post)) {
                                 $post = $post[0];
                                 if ($user->canViewStaffCP() || $post->author_id == $user->data()->id) {
-                                    try {
-                                        DB::getInstance()->delete('user_profile_wall_posts_replies', ['id', $_POST['post_id']]);
-                                    } catch (Exception $e) {
-                                        $error = $e->getMessage();
-                                    }
+                                    DB::getInstance()->delete('user_profile_wall_posts_replies', ['id', $_POST['post_id']]);
                                 }
                             }
                         }
@@ -472,23 +487,6 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
         }
     }
 
-    // Set Can view
-    if ($user->isLoggedIn() && $profile_user->isBlocked($query->id, $user->data()->id)) {
-        $template->getEngine()->addVariables([
-            'BLOCKED' => $language->get('user', 'blocked_profile_page'),
-            'CAN_VIEW' => false
-        ]);
-    } else if ($profile_user->isPrivateProfile() && !$user->canBypassPrivateProfile()) {
-        $template->getEngine()->addVariables([
-            'PRIVATE_PROFILE' => $language->get('user', 'private_profile_page'),
-            'CAN_VIEW' => false
-        ]);
-    } else {
-        $template->getEngine()->addVariables([
-            'CAN_VIEW' => true
-        ]);
-    }
-
     // Generate Smarty variables to pass to template
     if ($user->isLoggedIn()) {
         // Form token
@@ -499,12 +497,6 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
             'CANCEL' => $language->get('general', 'cancel'),
             'CAN_MODERATE' => $user->canViewStaffCP()
         ]);
-
-        if ($user->hasPermission('profile.private.bypass')) {
-            $template->getEngine()->addVariables([
-                'CAN_VIEW' => true
-            ]);
-        }
 
         if ($user->data()->id == $query->id) {
             // Custom profile banners
@@ -688,7 +680,8 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
 
                 foreach ($replies_query as $reply) {
                     $reply_user = new User($reply->author_id);
-                    $content = EventHandler::executeEvent('renderProfilePost', ['content' => $reply->content])['content'];
+                    $render_event = new RenderContentEvent($reply->content);
+                    EventHandler::executeEvent($render_event);
 
                     $replies['replies'][] = [
                         'user_id' => Output::getClean($reply->author_id),
@@ -699,7 +692,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                         'avatar' => $reply_user->getAvatar(500),
                         'time_friendly' => $timeago->inWords($reply->time, $language),
                         'time_full' => date(DATE_FORMAT, $reply->time),
-                        'content' => $content,
+                        'content' => $render_event->content,
                         'self' => (($user->isLoggedIn() && $user->data()->id == $reply->author_id) ? 1 : 0),
                         'id' => $reply->id
                     ];
@@ -709,7 +702,8 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
             }
 
             $post_user = new User($nValue->author_id);
-            $content = EventHandler::executeEvent('renderProfilePost', ['content' => $nValue->content])['content'];
+            $render_event = new RenderContentEvent($nValue->content);
+            EventHandler::executeEvent($render_event);
             $wall_posts[] = [
                 'id' => $nValue->id,
                 'user_id' => Output::getClean($post_user->data()->id),
@@ -718,7 +712,7 @@ if (count($profile) >= 3 && ($profile[count($profile) - 1] != 'profile' || $prof
                 'profile' => $post_user->getProfileURL(),
                 'user_style' => $post_user->getGroupStyle(),
                 'avatar' => $post_user->getAvatar(),
-                'content' => $content,
+                'content' => $render_event->content,
                 'date_rough' => $timeago->inWords($nValue->time, $language),
                 'date' => date(DATE_FORMAT, $nValue->time),
                 'reactions' => $post_reactions,
