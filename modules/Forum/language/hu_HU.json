@@ -134,7 +134,6 @@
     "forum/recent_topics": "Friss témák",
     "forum/redirect_forum": "Fórum átirányítása?",
     "forum/redirect_url": "Átirányítási URL",
-    "forum/registered_x": "Csatlakozott: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Kérjük, várjon {{count}} másodpercet, mielőtt újra keresnél.",
     "forum/search_results": "Keresési eredmények",
     "forum/select_a_parent_forum": "Válassz kapcsolódott fórumot",

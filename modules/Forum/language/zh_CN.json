@@ -120,7 +120,6 @@
     "forum/recent_topics": "当前话题数",
     "forum/redirect_forum": "作为重定向论坛",
     "forum/redirect_url": "重定向 URL",
-    "forum/registered_x": "注册时间：{{registeredAt}}",
     "forum/search_again_in_x_seconds": "请等待 {{count}} 秒后再进行搜索操作。",
     "forum/search_results": "搜索结果",
     "forum/select_a_parent_forum": "选择上级论坛",

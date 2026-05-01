@@ -124,7 +124,6 @@
     "forum/recent_topics": "Temas recientes",
     "forum/redirect_forum": "¿Redirigir el foro?",
     "forum/redirect_url": "URL de la redirección",
-    "forum/registered_x": "Se ha unido: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Por favor, espere {{count}} segundos antes de volver a buscar.",
     "forum/search_results": "Resultados de la búsqueda",
     "forum/select_a_parent_forum": "Seleccione un foro principal",

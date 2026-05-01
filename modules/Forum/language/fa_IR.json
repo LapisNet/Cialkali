@@ -154,7 +154,6 @@
     "forum/now_following_topic": "شما اکنون این موضوع را دنبال می کنید، و از هر پاسخ جدیدی مطلع خواهید شد.",
     "forum/quoted_post": "پست نقل قول",
     "forum/redirect_url": "URL تغییر مسیر",
-    "forum/registered_x": "ملحق شد: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "لطفاً قبل از جستجو مجدد {{count}} ثانیه صبر کنید.",
     "forum/share_facebook": "اشتراک گذاری در فیسبوک",
     "forum/spam_wait": "لطفاً قبل از ارسال مجدد {{count}} ثانیه صبر کنید.",

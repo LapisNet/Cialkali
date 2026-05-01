@@ -117,7 +117,6 @@
     "forum/recent_topics": "Subiecte recente",
     "forum/redirect_forum": "Forumul va redirecționa către o adresă URL?",
     "forum/redirect_url": "Adresa URL pentru redirecționare",
-    "forum/registered_x": "Data înscrierii: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Așteptați {{count}} secunde înainte de a căuta din nou.",
     "forum/search_results": "Rezultatele cautarii:",
     "forum/select_a_parent_forum": "Selectați un forum părinte",

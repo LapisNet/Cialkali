@@ -124,7 +124,6 @@
     "forum/recent_topics": "Recent Topics",
     "forum/redirect_forum": "Redirect forum?",
     "forum/redirect_url": "Redirect URL",
-    "forum/registered_x": "Joined: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Please wait {{count}} seconds before searching again.",
     "forum/search_results": "Search Results",
     "forum/select_a_parent_forum": "Select a parent forum",

@@ -101,7 +101,6 @@
     "forum/recent_topics": "Недавні теми",
     "forum/redirect_forum": "Це форум-перенаправлення?",
     "forum/redirect_url": "URL перенаправлення",
-    "forum/registered_x": "Приєднався: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Зачекай, будь ласка, {{count}} секунд перед тим, як знову шукати.",
     "forum/search_results": "Результати пошуку",
     "forum/settings_updated_successfully": "Налаштування успішно оновлено.",

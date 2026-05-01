@@ -124,7 +124,6 @@
     "forum/recent_topics": "Последние топики",
     "forum/redirect_forum": "Это форум-перенаправление?",
     "forum/redirect_url": "URL перенаправления",
-    "forum/registered_x": "Регистрация: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Пожалуйста, подождите {{count}} секунд прежде чем снова искать.",
     "forum/search_results": "Результаты поиска",
     "forum/select_a_parent_forum": "Выберите родительский форум",

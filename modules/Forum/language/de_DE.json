@@ -121,7 +121,6 @@
     "forum/recent_topics": "Kürzliche Themen",
     "forum/redirect_forum": "Forum umleiten?",
     "forum/redirect_url": "Weiterleitungs URL",
-    "forum/registered_x": "Beigetreten am: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Bitte warte {{count}} Sekunden, bevor du erneut suchst.",
     "forum/search_results": "Suchergebnisse",
     "forum/select_a_parent_forum": "Wähle ein übergeordnetes Forum",

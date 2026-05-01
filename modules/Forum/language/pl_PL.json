@@ -117,7 +117,6 @@
     "forum/recent_topics": "Ostatnie tematy",
     "forum/redirect_forum": "Przekierowywać forum?",
     "forum/redirect_url": "URL przekierowania",
-    "forum/registered_x": "Dołączył: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Poczekaj {{count}} sekund przed ponownym szukaniem.",
     "forum/search_results": "Wyniki wyszukiwania",
     "forum/select_a_parent_forum": "Wybierz forum nadrzędne",

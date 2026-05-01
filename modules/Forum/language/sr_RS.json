@@ -140,7 +140,6 @@
     "forum/recent_topics": "Nedavne teme",
     "forum/redirect_forum": "Preusmeri forum?",
     "forum/redirect_url": "URL za preusmeravanje",
-    "forum/registered_x": "Pridružio/la se: {{registeredAt}}",
     "forum/search_again_in_x_seconds": "Molimo sačekajte {{count}} sekundi pre ponovne pretrage.",
     "forum/search_results": "Rezultati pretrage",
     "forum/select_a_parent_forum": "Izaberite nadređeni forum",
