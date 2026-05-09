@@ -55,7 +55,7 @@
                     {foreach from=$forum.subforums item=subforum}
                     {if $subforum->redirect_forum neq 1}
                     <div class="centered row">
-                        <div class="one wide column mobile hidden">{if empty($subforum->icon)}
+                        <div class="one wide column mobile hidden ck-forum-icon">{if empty($subforum->icon)}
                             <i class="ui large comment icon middle aligned"></i>
                             {else}{$subforum->icon}{/if}
                         </div>
@@ -124,7 +124,7 @@
                     </div>
                     {else}
                     <div class="centered row">
-                        <div class="one wide column mobile hidden">{if empty($subforum->icon)}<i
+                        <div class="one wide column mobile hidden ck-forum-icon">{if empty($subforum->icon)}<i
                                 class="ui large comment icon middle aligned"></i>{else}{$subforum->icon}{/if}</div>
                         <div class="fifteen wide column">
                             <a class="header" data-toggle="modal" {if isset($subforum->redirect_confirm)}

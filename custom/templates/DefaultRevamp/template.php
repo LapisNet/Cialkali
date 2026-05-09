@@ -83,6 +83,10 @@ class DefaultRevamp_Template extends SmartyTemplateBase
             $this->_template['path'] . 'css/custom.css?v=220' => [],
         ]);
 
+        $this->addCSSFiles([
+            $this->_template['path'] . 'css/cialkali.css?v=100' => [],
+        ]);
+
         $route = (isset($_GET['route']) ? rtrim($_GET['route'], '/') : '/');
 
         $JSVariables = [

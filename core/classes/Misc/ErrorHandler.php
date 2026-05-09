@@ -125,7 +125,7 @@ class ErrorHandler
             $language = new Language('core', LANGUAGE);
         } else {
             // NamelessMC not installed yet
-            $language = new Language('core', 'en_UK');
+            $language = new Language('core', 'zh_CN');
         }
 
         $path = (defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/';

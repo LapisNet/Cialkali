@@ -74,7 +74,7 @@
     "forum/label_types": "标签类型",
     "forum/labels": "标签",
     "forum/last_7_days_posts": "论坛留言（最近 7 天）",
-    "forum/last_edited": "最后编辑时间：{{lastEditedAt}}",
+    "forum/last_edited": "最后编辑于 {{lastEditedAt}}",
     "forum/last_reply": "最后回复时间",
     "forum/latest_announcements": "最新公告",
     "forum/latest_discussions": "最新讨论",

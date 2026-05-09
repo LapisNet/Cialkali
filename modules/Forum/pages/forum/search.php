@@ -37,19 +37,17 @@ if (!isset($_GET['s'])) {
             $validation = Validate::check($_POST, [
                 'forum_search' => [
                     Validate::REQUIRED => true,
-                    Validate::MIN => 3,
+                    Validate::MIN => 2,
                     Validate::MAX => 128
                 ]
             ]);
 
             if ($validation->passed()) {
                 $search = str_replace(' ', '+', Output::getClean(Input::get('forum_search')));
-                $search = preg_replace('/[^a-zA-Z0-9 +]+/', '', $search); // alphanumeric only
-
                 Redirect::to(URL::build('/forum/search/', 's=' . urlencode($search) . '&p=1'));
             }
 
-            $error = $forum_language->get('forum', 'invalid_search_query', ['min' => 3, 'max' => 128]);
+            $error = $forum_language->get('forum', 'invalid_search_query', ['min' => 2, 'max' => 128]);
         } else {
             $error = $language->get('general', 'invalid_token');
         }
@@ -58,16 +56,15 @@ if (!isset($_GET['s'])) {
     $validation = Validate::check($_GET, [
         's' => [
             Validate::REQUIRED => true,
-            Validate::MIN => 3,
+            Validate::MIN => 2,
             Validate::MAX => 128
         ]
     ]);
 
     if (!$validation->passed()) {
-        $error = $forum_language->get('forum', 'invalid_search_query', ['min' => 3, 'max' => 128]);
+        $error = $forum_language->get('forum', 'invalid_search_query', ['min' => 2, 'max' => 128]);
     } else {
         $search = Output::getClean(str_replace('+', ' ', $_GET['s']));
-        $search = preg_replace('/[^a-zA-Z0-9 +]+/', '', $search); // alphanumeric only
 
         if (isset($_GET['p']) && is_numeric($_GET['p'])) {
             $p = $_GET['p'];

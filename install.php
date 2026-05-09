@@ -43,7 +43,7 @@ if (
     $language_short_code = $_SESSION['installer_language'];
 } else {
     // Require default language (English UK)
-    $language_short_code = 'en_UK';
+    $language_short_code = 'zh_CN';
 }
 
 $language = new Language('core', $language_short_code);
